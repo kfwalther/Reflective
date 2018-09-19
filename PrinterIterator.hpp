@@ -4,9 +4,24 @@
  * @brief: Uses reflection to print members in JSON format.
  */
 
-#include <boost/fusion/include/at_c.hpp>
-#include <boost/fusion/include/size.hpp>
+#include <boost/mpl/eval_if.hpp>
+#include <boost/mpl/identity.hpp>
+#include <boost/mpl/next_prior.hpp>
+
+#include <boost/fusion/mpl.hpp>
+#include <boost/fusion/adapted.hpp> // BOOST_FUSION_ADAPT_STRUCT
+
+// boost::fusion::result_of::value_at
+#include <boost/fusion/sequence/intrinsic/value_at.hpp>
+#include <boost/fusion/include/value_at.hpp>
+
+// boost::fusion::result_of::size
 #include <boost/fusion/sequence/intrinsic/size.hpp>
+#include <boost/fusion/include/size.hpp>
+
+// boost::fusion::at
+#include <boost/fusion/sequence/intrinsic/at.hpp>
+#include <boost/fusion/include/at.hpp>
 
 #include <boost/bind.hpp>
 #include <boost/ref.hpp>
@@ -16,18 +31,19 @@
 
 
 // Define methods to handle commas.
-template < typename S, typename N >
+template < class ObjectType, int Index >
 struct Comma
 {
-    template < typename Ostream >
+    template < class Ostream >
     static inline void comma(Ostream& os)
     {
         os << ", ";
     }
 };
 
-template < typename S >
-struct Comma< S, typename boost::mpl::prior< typename boost::fusion::result_of::size< S >::type >::type >
+// Define the comma base case to prevent trailing comma.
+template < class ObjectType >
+struct Comma< ObjectType, boost::mpl::prior< typename boost::fusion::result_of::size< ObjectType >::type >::type::value >
 {
     template < typename Ostream >
     static inline void comma(Ostream& os)
@@ -40,10 +56,10 @@ struct Comma< S, typename boost::mpl::prior< typename boost::fusion::result_of::
 struct PrintVisitor {
     template < class Index, class ObjectType >
     void operator()(Index, ObjectType & obj) {
-        std::cout << boost::fusion::extension::struct_member_name< ObjectType, Index::value >::call() 
-		<< ": " << boost::fusion::at< Index >(obj);
+        std::cout << "\"" <<  boost::fusion::extension::struct_member_name< ObjectType, Index::value >::call() 
+		<< "\": " << boost::fusion::at< Index >(obj);
 		// Print a comma, if necessary.
-		Comma< ObjectType, Index >::comma(std::cout);
+		Comma< ObjectType, Index::value >::comma(std::cout);
     }
 };
 
