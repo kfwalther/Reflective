@@ -13,8 +13,8 @@
 int main()
 {
     // Instantiate the classes.
-    Car car = { 280, 38, "Racer" };
-    Chevy chevy = { 315, 42, "Tahoe", 2005, Platform::CAR };
+    Car car = { 280, 3.8, "Racer" };
+    Chevy chevy = { 315, 4.2, "Tahoe", 2005, Platform::CAR };
 
 	// Print their fields.
     PrintMembers(car);

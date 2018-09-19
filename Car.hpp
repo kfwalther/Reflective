@@ -18,14 +18,14 @@ enum Platform {
 struct Car
 {
     unsigned int horsePower;
-    int engineSize;
+    double engineSize;
     std::string name;
 };
 
 // Define an Chevy child class.
 struct Chevy : public Car
 {
-    Chevy(unsigned int horsePower, int engineSize, std::string name, unsigned int year, Platform plat) :
+    Chevy(unsigned int horsePower, double engineSize, std::string name, unsigned int year, Platform plat) :
             Car{horsePower, engineSize, name},
             year(year),
             plat(plat)
