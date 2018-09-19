@@ -20,7 +20,7 @@ int main()
     PrintMembers(car);
     PrintMembers(chevy);
     
-    std::cout << "Successful completion!" << std::endl;
+    std::cout << std::endl << "Successful completion!" << std::endl;
 	return EXIT_SUCCESS;
 }
 
