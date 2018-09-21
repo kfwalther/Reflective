@@ -22,14 +22,14 @@ struct Car
 {
     unsigned int horsePower;
     double engineSize;
-    float name;
+    char name[10];
 };
 
 // Define an Chevy child class.
 struct Chevy : public Car
 {
-    Chevy(unsigned int horsePower, double engineSize, float name, unsigned int year, Platform plat) :
-            Car{horsePower, engineSize, name},
+    Chevy(unsigned int horsePower, double engineSize, char name[], unsigned int year, Platform plat) :
+            Car{horsePower, engineSize, {'c', 'a', 'r', '1', '\0'} },
             year(year),
             plat(plat)
     {
