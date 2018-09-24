@@ -8,7 +8,8 @@
 
 #include <boost/fusion/adapted/struct.hpp>
 
- 
+//typedef Car[] CarArrayType;
+
 // Define a set of Platform types.
 enum Platform {
     UNKNOWN,

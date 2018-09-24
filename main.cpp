@@ -10,6 +10,16 @@
 #include "CarDealer.hpp"
 #include "PrinterIterator.hpp"
 
+// Define a specialized version of printJson for characters.
+void printJson(char & charObj) {
+	// Check to ensure character is printable.
+	if ((static_cast<uint8_t>(charObj) >= 32) && (static_cast<uint8_t>(charObj) <= 126)) {
+		std::cout << charObj;
+	} else {
+		std::cout << " ";		
+	}
+}
+
 // Main entry point to the program.
 int main()
 {

@@ -31,17 +31,15 @@
 #include <boost/fusion/include/at.hpp>
 
 #include <boost/bind.hpp>
-#include <boost/ref.hpp>
+#include <boost/ref.hpp>  
 
 #include <boost/mpl/for_each.hpp>
 #include <boost/mpl/range_c.hpp> 
 
 // Forward declarations.
-struct PrintVisitor;
-
 template < class ObjectType >
 void printJson(ObjectType & obj);
-
+void printJson(char & charObj);
 
 // Define methods to handle commas.
 template < class ObjectType, int Index >
@@ -97,13 +95,13 @@ struct JsonArithmeticPrinter {
 };
 
 // Define the array printer.
-template < class ObjectType >
+template < class ArrayObjectType >
 struct JsonArrayPrinter {
 	// Determine the number of elements in the array.
-	typedef typename boost::remove_bounds< ObjectType >::type slice_t;
-    static size_t const numElements = sizeof(ObjectType) / sizeof(slice_t);
+	typedef typename boost::remove_bounds< ArrayObjectType >::type ObjectType;
+    static size_t const numElements = sizeof(ArrayObjectType) / sizeof(ObjectType);
 	// Define a print function for the array case.
-	static inline void print(ObjectType & obj) {
+	static inline void print(ArrayObjectType & obj) {
 		std::cout << "[ ";
 		for (size_t idx = 0; idx < numElements; idx++) {
 			// Call the printJson dispatcher to print each element in the array.
@@ -140,7 +138,6 @@ template < class ObjectType >
 void printJson(ObjectType & obj) {
 	JsonPrinter< ObjectType >::print(obj);
 }
-
 
 
 
